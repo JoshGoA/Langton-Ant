@@ -28,7 +28,7 @@ class ant:
     color_data[C_1] = turnRight
     # Color 2
     C_2 = 2
-    color_data[C_2] = turnRight
+    color_data[C_2] = turnLeft
     # Color 3
     C_3 = 3
     color_data[C_3] = turnLeft
@@ -44,19 +44,19 @@ class ant:
     # Color 7
     C_7 = 7
     color_data[C_7] = turnLeft
-    # Color 6
+    # Color 8
     C_8 = 8
     color_data[C_8] = turnLeft
-    # Color 7
+    # Color 9
     C_9 = 9
     color_data[C_9] = turnLeft
-    # Color 6
+    # Color 10
     C_10 = 10
     color_data[C_10] = turnRight
-    # Color 6
+    # Color 11
     C_11 = 11
     color_data[C_11] = turnRight
-    # Color 7
+    # Color 12
     C_12 = 12
     color_data[C_12] = turnRight
 #---------Iterations per draw--------
@@ -139,8 +139,12 @@ def animate(i):
 #------------------Draw ants-------------------
     ant_1.antPosition(move)
     #ant_2.antPosition(move)
-    # Set data
-    im = ax.imshow(move, cmap = plt.cm.RdYlGn)
+#------------------Set data--------------------
+    #Colors:
+        #plt.cm.RdYlGn
+        #plt.cm.bone
+    color = plt.cm.bone
+    im = ax.imshow(move, cmap = color)
     im.set_data(move)
     return [im]
 
