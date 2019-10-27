@@ -5,66 +5,91 @@ import matplotlib.animation as anim
 import matplotlib.colors as mcolors
 
 class ant:
-
-    # Direction
+#--------------Direction-------------
     antUp = 0
     antRight = 1
     antDown = 2
     antLeft = 3
-    # Movement
+#--------------Movement--------------
     turnRight = 0
     turnLeft = 1
-    # Colors: Movement
+#----------Colors: Movement----------
+    #Example patterns in the multiple-color extension of Langton's ants:
+        #RLR: Grows chaotically. It is not known whether this ant ever produces a highway. 
+        #LLRR: Grows symmetrically. 
+        #LRRRRRLLR: Fills space in a square around itself. 
+        #LLRRRLRLRLLR: Creates a convoluted highway. 
+        #RRLLLRLLLRRR: Creates a filled triangle shape that grows and moves. 
     color_data = dict()
-    antBlue = 0 # Color 0
-    White = 1   # Color 1
-    color_data[White] = turnRight
-    Black = 2   # Color 2
-    color_data[Black] = turnLeft
-    Red = 3     # Color 3
-    color_data[Red] = turnRight
-    Green = 4   # Color 4
-    color_data[Green] = turnLeft
-    Yellow = 5
-    color_data[Yellow] = turnRight
-    color_dataStr = ['Blue', 'White', 'Black', 'Red', 'Green', 'Yellow']  # Color list
-    # Iterations per draw
-    max_i = 1000
-    # Value board
+    # Color 0 (Ant)
+    antC = 0
+    # Color 1
+    C_1 = 1
+    color_data[C_1] = turnRight
+    # Color 2
+    C_2 = 2
+    color_data[C_2] = turnRight
+    # Color 3
+    C_3 = 3
+    color_data[C_3] = turnLeft
+    # Color 4
+    C_4 = 4
+    color_data[C_4] = turnLeft
+    # Color 5
+    C_5 = 5
+    color_data[C_5] = turnLeft
+    # Color 6
+    C_6 = 6
+    color_data[C_6] = turnRight
+    # Color 7
+    C_7 = 7
+    color_data[C_7] = turnLeft
+    # Color 6
+    C_8 = 8
+    color_data[C_8] = turnLeft
+    # Color 7
+    C_9 = 9
+    color_data[C_9] = turnLeft
+    # Color 6
+    C_10 = 10
+    color_data[C_10] = turnRight
+    # Color 6
+    C_11 = 11
+    color_data[C_11] = turnRight
+    # Color 7
+    C_12 = 12
+    color_data[C_12] = turnRight
+#---------Iterations per draw--------
+    max_i = 10000
+#-------------Value board------------
     max_N = 250
     nextGen_board = np.ones((max_N, max_N))
 
-    # IGNORE # Initialize board with values if iterations per draw
-    #nextGen_board[0, 0] = Black
-    #nextGen_board[0, 1] = Red
-    #nextGen_board[0, 2] = Green
-    #nextGen_board[0, 3] = antBlue
-
     # Initialize with position and direction
     def __init__(self):
-        # Semi-random position (more or less middle of board)
+        # Middle position
         self.y = ant.max_N//2
         self.x = ant.max_N//2
-        #Random direction
+        # Random direction
         self.direction = random.randrange(0, 4)
 
     # Move ant
     def move(self):
         # Ant board
         currentGen_board = ant.nextGen_board.copy()
-        self.antPosition(currentGen_board)
         # Limit edges
         if((self.y > 1) and (self.y < ant.max_N-1) and (self.x > 1) and (self.x < ant.max_N-1)):
             # Range through each color until match is found
             for color in range(1, len(ant.color_data)+1):
                 if(ant.nextGen_board[self.y, self.x] == color):
                     self.directionColor(color)
+        # Return new values
         return currentGen_board
 
     # Set ant position
     def antPosition(self, currentGen_board):
-        # Ant blue
-        currentGen_board[self.y, self.x] = ant.antBlue
+        # Ant position: ant color
+        currentGen_board[self.y, self.x] = ant.antC
 
     # Change ant direction and previous color
     def directionColor(self, color):
@@ -81,7 +106,6 @@ class ant:
             else:
                 self.direction = 0
             self.advance()
-            
         # Turn left
         if(ant.color_data[color] == ant.turnLeft):
             # Change direction
@@ -102,25 +126,28 @@ class ant:
         else:
             self.x += -1
 
-# Number of ants
+#----------------Number of ants----------------
 ant_1 = ant()
 #ant_2 = ant()
-#ant_3 = ant()
 
-fig, ax = plt.subplots()
-plt.axis("off")
-
+# Ant animation
 def animate(i):
+#-----Range algorithm max_i times per draw-----
     for i in range(0, ant.max_i):
         move = ant_1.move()
         #move = ant_2.move()
-        #move = ant_3.move()
-    #move[ant_1.y, ant_1.x] = 0
-    #move[ant_2.y, ant_2.x] = 0
-    cmap = mcolors.ListedColormap(ant.color_dataStr)
-    im = ax.imshow(move, cmap = cmap)
+#------------------Draw ants-------------------
+    ant_1.antPosition(move)
+    #ant_2.antPosition(move)
+    # Set data
+    im = ax.imshow(move, cmap = plt.cm.RdYlGn)
     im.set_data(move)
     return [im]
 
+# Define subplots
+fig, ax = plt.subplots()
+
+# Show drawing
+plt.axis("off")
 animation = anim.FuncAnimation(fig, animate, frames = 100, interval = 1, blit = False, repeat = True)
 plt.show()
