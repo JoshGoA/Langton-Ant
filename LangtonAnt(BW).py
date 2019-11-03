@@ -5,7 +5,7 @@ import matplotlib.colors as mcolors
 import random
 
 class langton:
-    max_N = 10  #Board area
+    max_N = 100  #Board area
     board = np.zeros((max_N, max_N))
     #Initialize initial position to a partialy random value more or less located in the middle of the board
     def __init__(self):
@@ -55,9 +55,8 @@ im = ax.imshow(ant.move(), cmap = mcolors.ListedColormap(['White', 'Black', 'Red
 plt.axis("on")
 
 def animate(i):
-    im.set_data(ant.move())
-    return [im]
-
+    for i in range(0, 10):
+        im.set_data(ant.move())
 
 animation = anim.FuncAnimation(fig, animate, frames = 100, interval = 10, blit = False, repeat = True)
 plt.show()

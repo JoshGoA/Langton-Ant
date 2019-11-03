@@ -15,50 +15,50 @@ class ant:
     turnLeft = 1
 #----------Colors: Movement----------
     #Example patterns in the multiple-color extension of Langton's ants:
-        #RLR: Grows chaotically. It is not known whether this ant ever produces a highway. 
-        #LLRR: Grows symmetrically. 
-        #LRRRRRLLR: Fills space in a square around itself. 
-        #LLRRRLRLRLLR: Creates a convoluted highway. 
-        #RRLLLRLLLRRR: Creates a filled triangle shape that grows and moves. 
+        #RLR: Grows chaotically. It is not known whether this ant ever produces a highway.
+        #LLRR: Grows symmetrically.
+        #LRRRRRLLR: Fills space in a square around itself.
+        #LLRRRLRLRLLR: Creates a convoluted highway.
+        #RRLLLRLLLRRR: Creates a filled triangle shape that grows and moves.
     color_data = dict()
     # Color 0 (Ant)
     antC = 0
     # Color 1
     C_1 = 1
-    color_data[C_1] = turnRight
+    color_data[C_1] = turnLeft
     # Color 2
     C_2 = 2
     color_data[C_2] = turnLeft
     # Color 3
     C_3 = 3
-    color_data[C_3] = turnLeft
+    color_data[C_3] = turnRight
     # Color 4
     C_4 = 4
-    color_data[C_4] = turnLeft
-    # Color 5
-    C_5 = 5
-    color_data[C_5] = turnLeft
-    # Color 6
-    C_6 = 6
-    color_data[C_6] = turnRight
-    # Color 7
-    C_7 = 7
-    color_data[C_7] = turnLeft
-    # Color 8
-    C_8 = 8
-    color_data[C_8] = turnLeft
-    # Color 9
-    C_9 = 9
-    color_data[C_9] = turnLeft
-    # Color 10
-    C_10 = 10
-    color_data[C_10] = turnRight
-    # Color 11
-    C_11 = 11
-    color_data[C_11] = turnRight
-    # Color 12
-    C_12 = 12
-    color_data[C_12] = turnRight
+    color_data[C_4] = turnRight
+    ## Color 5
+    #C_5 = 5
+    #color_data[C_5] = turnLeft
+    ## Color 6
+    #C_6 = 6
+    #color_data[C_6] = turnRight
+    ## Color 7
+    #C_7 = 7
+    #color_data[C_7] = turnLeft
+    ## Color 8
+    #C_8 = 8
+    #color_data[C_8] = turnLeft
+    ## Color 9
+    #C_9 = 9
+    #color_data[C_9] = turnLeft
+    ## Color 10
+    #C_10 = 10
+    #color_data[C_10] = turnRight
+    ## Color 11
+    #C_11 = 11
+    #color_data[C_11] = turnRight
+    ## Color 12
+    #C_12 = 12
+    #color_data[C_12] = turnRight
 #---------Iterations per draw--------
     max_i = 10000
 #-------------Value board------------
@@ -132,6 +132,8 @@ ant_1 = ant()
 
 # Ant animation
 def animate(i):
+    ax.cla()
+    plt.axis("off")
 #-----Range algorithm max_i times per draw-----
     for i in range(0, ant.max_i):
         move = ant_1.move()
@@ -144,14 +146,11 @@ def animate(i):
         #plt.cm.RdYlGn
         #plt.cm.bone
     color = plt.cm.bone
-    im = ax.imshow(move, cmap = color)
-    im.set_data(move)
-    return [im]
+    ax.imshow(move, cmap=color)
 
 # Define subplots
 fig, ax = plt.subplots()
 
 # Show drawing
-plt.axis("off")
-animation = anim.FuncAnimation(fig, animate, frames = 100, interval = 1, blit = False, repeat = True)
+animation = anim.FuncAnimation(fig, animate, frames=100, interval=1, blit=False, repeat=True)
 plt.show()
